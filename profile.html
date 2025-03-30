@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        .profile-container {
+            width: 300px;
+            margin: auto;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .logout-btn {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .logout-btn:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Profile</h1>
+    <div class="profile-container">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" value="Loop Breakers" readonly>
+        <label for="email">Email:</label>
+        <input type="email" id="email" value="loopbrekers@sample.com" readonly>
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" value="+91 9123456789" readonly>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        function logout() {
+            alert("You have been logged out.");
+            window.location.href = "index.html"; // Redirect to the homepage or login page
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background-image: url('signup_background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            padding: 20px; 
+            background: white; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 380px;
+            opacity: 0.95;
+        }
+        h2 {
+            margin-bottom: 15px;
+        }
+        p {
+            margin: 5px 0 15px;
+        }
+        input, button {
+            width: 92%; 
+            margin: 10px 0; 
+            padding: 12px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 15px;
+        }
+        button {
+            background-color: #4CAF50; 
+            color: white; 
+            cursor: pointer; 
+            font-weight: bold;
+            border: none;
+        }
+        button:hover { 
+            background-color: #45a049; 
+        }
+        .login-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .login-btn:hover { 
+            background-color: #45a049; 
+        }
+        .text-center { 
+            text-align: center; 
+            font-size: 14px; 
+            margin-top: 15px;
+        }
+        #response {
+            margin-top: 10px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome</h2>
+        <p>Please choose an option:</p>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+
+        <h2>Create New Account</h2>
+        <form id="registerForm">
+            <input type="text" name="username" placeholder="Your Full Name" required>
+            <input type="text" name="mobile" id="mobile" placeholder="Mobile No." maxlength="10" required>
+            <input type="password" name="createPassword" placeholder="Create Password" required>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="response"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        const mobileInput = document.getElementById('mobile');
+        const responseDiv = document.getElementById('response');
+
+        mobileInput.addEventListener('input', () => {
+            const value = mobileInput.value;
+            if (!/^\d*$/.test(value)) {  
+                responseDiv.innerText = "Error: Only numbers from 0 to 9 are allowed.";
+                mobileInput.value = value.replace(/\D/g, ''); 
+            } else {
+                responseDiv.innerText = "";
+            }
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const mobile = mobileInput.value.trim();
+            if (mobile.length !== 10) {  
+                responseDiv.innerText = 'Error: Mobile number must be exactly 10 digits long.';
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('http://localhost:3000/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+                responseDiv.innerText = result;
+            } catch (error) {
+                responseDiv.innerText = 'Error connecting to the server.';
+            }
+        });
+    </script>
+</body>
+</html>
